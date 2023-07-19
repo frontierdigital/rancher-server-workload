@@ -1,0 +1,11 @@
+# ide
+.env
+.vscode
+
+# python
+.venv
+
+# terraform
+.terraform
+
+# other
