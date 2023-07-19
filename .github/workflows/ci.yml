@@ -9,11 +9,14 @@ jobs:
   preflight:
     runs-on: ubuntu-latest
     outputs:
-      terraform_version: ${{ steps.get_terraform_version.outputs.terraform_version }}
+      python_version: ${{ steps.get_python_version.outputs.python_version }}
+      terraform_version: ${{ steps.get_terraform_version.outputs.terraform_version }}  # yamllint disable-line rule:line-length
     steps:
       - uses: actions/checkout@v3
+      - id: get_python_version
+        run: echo "python_version=$(cat ${GITHUB_WORKSPACE}/.python-version)" >> "$GITHUB_OUTPUT"  # yamllint disable-line rule:line-length
       - id: get_terraform_version
-        run: echo "terraform_version=$(cat ${GITHUB_WORKSPACE}/.tfswitchrc)" >> "$GITHUB_OUTPUT"
+        run: echo "terraform_version=$(cat ${GITHUB_WORKSPACE}/.tfswitchrc)" >> "$GITHUB_OUTPUT"  # yamllint disable-line rule:line-length
   build:
     needs: preflight
     runs-on: ubuntu-latest
@@ -21,7 +24,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ needs.preflight.outputs.python_version }}
       - name: Setup pipenv
         run: python -m pip install --upgrade pipenv wheel
       - name: Setup pipenv cache
