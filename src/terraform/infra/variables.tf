@@ -18,6 +18,10 @@ variable "location" {
   type = string
 }
 
+variable "node_count" {
+  type = number
+}
+
 variable "short_location" {
   type = string
 }
@@ -25,6 +29,10 @@ variable "short_location" {
 variable "tags" {
   type    = map(string)
   default = {}
+}
+
+variable "vm_size" {
+  type = string
 }
 
 variable "workload_name" {
