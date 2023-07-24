@@ -36,11 +36,14 @@ def deploy_terraform(
 
     t = Terraform(root_dir)
 
-    return_code, stdout, stderr = t.init(backend_config={
-        'key': terraform_state_key,
-        'resource_group_name': terraform_state_storage_account_resource_group_name,  # noqa: E501
-        'storage_account_name': terraform_state_storage_account_name,
-    })
+    return_code, stdout, stderr = t.init(
+        backend_config={
+            "key": terraform_state_key,
+            "resource_group_name": terraform_state_storage_account_resource_group_name,  # noqa: E501
+            "storage_account_name": terraform_state_storage_account_name,
+        },
+        capture_output=False,
+    )
     if (return_code != 0):
         handle_error(return_code, stdout, stderr)
 
@@ -49,16 +52,18 @@ def deploy_terraform(
     return_code, stdout, stderr = t.plan(
         out=tf_plan_file_path,
         var={
-            'environment': environment,
-            'location': region,
-            'set': set,
-            'short_location': short_region,
-            'workload_name': workload_name,
-            'workload_type': workload_type,
-            'workload_version': workload_version,
-            'zone': zone,
+            "environment": environment,
+            "location": region,
+            "set": set,
+            "short_location": short_region,
+            "workload_name": workload_name,
+            "workload_type": workload_type,
+            "workload_version": workload_version,
+            "zone": zone,
         },
-        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),)  # noqa: E501
+        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
+        capture_output=False,
+    )
     if (return_code != 0):
         handle_error(return_code, stdout, stderr)
 
@@ -73,7 +78,7 @@ def deploy():
             short_region = "ukw"
 
     deploy_terraform(
-        "src/terraform/infra",
+        os.path.join(os.getcwd(), "src/terraform/infra"),
         region,
         short_region,
         os.environ["ENVIRONMENT"],
