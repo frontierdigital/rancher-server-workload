@@ -1,6 +1,7 @@
 build:
 
 deploy:
+	set -a && source .config/env.properties && set +a
 	pipenv run python scripts/deploy.py
 
 install:

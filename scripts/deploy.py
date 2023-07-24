@@ -52,11 +52,13 @@ def deploy_terraform(
             'environment': environment,
             'location': region,
             'set': set,
-            'short_region': short_region,
+            'short_location': short_region,
             'workload_name': workload_name,
             'workload_type': workload_type,
             'workload_version': workload_version,
-        })
+            'zone': zone,
+        },
+        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),)  # noqa: E501
     if (return_code != 0):
         handle_error(return_code, stdout, stderr)
 
