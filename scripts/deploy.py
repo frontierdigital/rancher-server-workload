@@ -64,7 +64,7 @@ def deploy_terraform(
 
     return_code, _, _ = t.apply(
         dir_or_plan=tf_plan_file_path,
-        capture_output=False,
+        # capture_output=False,
     )
     if (return_code != 0):
         exit(return_code)
