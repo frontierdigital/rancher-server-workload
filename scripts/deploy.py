@@ -3,12 +3,6 @@ from python_terraform import Terraform
 from tempfile import TemporaryDirectory
 
 
-def handle_error(return_code: int, stdout: str, stderr: str):
-    print(stdout)
-    print(stderr)
-    exit(return_code)
-
-
 def deploy_terraform(
         root_dir: str,
         region: str,
@@ -36,7 +30,7 @@ def deploy_terraform(
 
     t = Terraform(root_dir)
 
-    return_code, stdout, stderr = t.init(
+    return_code, _, _ = t.init(
         backend_config={
             "key": terraform_state_key,
             "resource_group_name": terraform_state_storage_account_resource_group_name,  # noqa: E501
@@ -45,11 +39,11 @@ def deploy_terraform(
         capture_output=False,
     )
     if (return_code != 0):
-        handle_error(return_code, stdout, stderr)
+        exit(return_code)
 
     tf_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
 
-    return_code, stdout, stderr = t.plan(
+    return_code, _, _ = t.plan(
         out=tf_plan_file_path,
         var={
             "environment": environment,
@@ -65,7 +59,7 @@ def deploy_terraform(
         capture_output=False,
     )
     if (return_code != 0):
-        handle_error(return_code, stdout, stderr)
+        exit(return_code)
 
 
 def deploy():
