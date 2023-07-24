@@ -1,6 +1,6 @@
 import os
 from python_terraform import Terraform
-from shutil import rmtree
+# from shutil import rmtree
 # from tempfile import TemporaryDirectory
 
 
