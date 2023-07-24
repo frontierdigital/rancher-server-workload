@@ -55,6 +55,7 @@ def deploy_terraform(
             'short_region': short_region,
             'workload_name': workload_name,
             'workload_type': workload_type,
+            'workload_version': workload_version,
         })
     if (return_code != 0):
         handle_error(return_code, stdout, stderr)
@@ -75,7 +76,9 @@ def deploy():
         short_region,
         os.environ["ENVIRONMENT"],
         os.environ["ZONE"],
+        os.environ["SET"],
         os.environ["WORKLOAD_NAME"],
+        os.environ["WORKLOAD_TYPE"],
         os.environ["WORKLOAD_VERSION"],
     )
 
