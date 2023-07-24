@@ -103,10 +103,10 @@ jobs:
         run: |
           set -euo pipefail
 
-          CONFIG_DIR_PATH="{{ github.workspace }}/config/dev"
+          CONFIG_DIR_PATH="${{ github.workspace }}/config/dev"
           if [[ -d "$CONFIG_DIR_PATH" ]]; then
             echo "Fetching config from $CONFIG_DIR_PATH."
-            cp -R "$CONFIG_DIR_PATH" "{{ github.workspace }}/.config"
+            cp -R "$CONFIG_DIR_PATH" "${{ github.workspace }}/.config"
           else
             echo "No config found."
           fi
@@ -138,9 +138,9 @@ jobs:
           AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
           ENVIRONMENT: dev
-          HELM_CACHE_HOME: "{{ github.workspace }}/.helm/cache"
-          HELM_CONFIG_HOME: "{{ github.workspace }}/.helm/config"
-          HELM_DATA_HOME: "{{ github.workspace }}/.helm/data"
+          HELM_CACHE_HOME: "${{ github.workspace }}/.helm/cache"
+          HELM_CONFIG_HOME: "${{ github.workspace }}/.helm/config"
+          HELM_DATA_HOME: "${{ github.workspace }}/.helm/data"
           REGION: uksouth
           SET: standalone
           WORKLOAD_NAME: rancher-server
