@@ -46,6 +46,7 @@ jobs:
   build:
     needs: preflight
     runs-on: ubuntu-latest
+    environment: dev
     outputs:
       version: ${{ steps.increment_version.outputs.v-version }}
     steps:
