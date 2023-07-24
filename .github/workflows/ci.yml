@@ -109,3 +109,9 @@ jobs:
       - uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: ${{ needs.preflight.outputs.terraform_version }}
+      - name: Install
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make install
+      - name: Deploy
+        if: steps.cache-pipenv.outputs.cache-hit != 'true'
+        run: make deploy
