@@ -107,6 +107,8 @@ jobs:
           if [[ -d "$CONFIG_DIR_PATH" ]]; then
             echo "Fetching config from $CONFIG_DIR_PATH."
             cp -R "$CONFIG_DIR_PATH" "${{ github.workspace }}/.config"
+            ls -al ${{ github.workspace }}
+            ls -al ${{ github.workspace }}/.config
           else
             echo "No config found."
           fi
