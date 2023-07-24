@@ -15,7 +15,7 @@ def deploy_terraform(
         workload_type: str,
         workload_version: str,
 ):
-    terraform_state_key = "{}".format(workload_name)
+    terraform_state_key = "{0}_{1}".format(set, workload_name)
     terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(  # noqa: E501
         zone,
         environment,
@@ -29,9 +29,9 @@ def deploy_terraform(
 
     # temp_dir_path = TemporaryDirectory()
 
-    t = Terraform(root_dir)
+    terraform = Terraform(root_dir)
 
-    return_code, _, _ = t.init(
+    return_code, _, _ = terraform.init(
         backend_config={
             "key": terraform_state_key,
             "resource_group_name": terraform_state_storage_account_resource_group_name,  # noqa: E501
@@ -44,7 +44,7 @@ def deploy_terraform(
 
     # tf_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
 
-    return_code, _, _ = t.apply(
+    return_code, _, _ = terraform.apply(
         # out=tf_plan_file_path,
         var={
             "environment": environment,
