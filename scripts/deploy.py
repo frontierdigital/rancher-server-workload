@@ -1,5 +1,6 @@
 import os
 from python_terraform import Terraform
+from shutil import rmtree
 from tempfile import TemporaryDirectory
 
 
@@ -60,6 +61,13 @@ def deploy_terraform(
     )
     if (return_code != 0):
         exit(return_code)
+
+    return_code, _, _ = t.apply(
+        dir_or_plan=tf_plan_file_path,
+        capture_output=False,
+    )
+
+    rmtree(temp_dir_path.name)
 
 
 def deploy():
