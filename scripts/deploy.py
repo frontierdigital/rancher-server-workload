@@ -61,10 +61,18 @@ def deploy_terraform(
 
 
 def deploy():
+    region = os.environ["REGION"]
+    short_region = None
+    match region:
+        case "uksouth":
+            short_region = "uks"
+        case "ukwest":
+            short_region = "ukw"
+
     deploy_terraform(
         "src/terraform/infra",
-        os.environ["REGION"],
-        os.environ["SHORT_REGION"],
+        region,
+        short_region,
         os.environ["ENVIRONMENT"],
         os.environ["ZONE"],
         os.environ["WORKLOAD_NAME"],
