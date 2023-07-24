@@ -3,11 +3,12 @@ provider "azurerm" {
 }
 
 module "resource_group" {
-  source = "git::https://github.com/frontierdigital/resource-group-terraform-module//src?ref=v1.0.0-pre.b790a21"
+  source = "git::https://github.com/frontierdigital/resource-group-terraform-module//src?ref=v1.0.0-pre.e5a5842"
 
   environment      = var.environment
   identifier       = local.identifier
   location         = var.location
+  set              = var.set
   tags             = var.tags
   workload_name    = var.workload_name
   workload_type    = var.workload_type

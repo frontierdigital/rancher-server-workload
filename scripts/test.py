@@ -7,7 +7,7 @@ def handle_error(return_code: int, stdout: str, stderr: str):
     exit(return_code)
 
 
-def test_terraform(working_dir: str, validate: bool = True):
+def test(working_dir: str, validate: bool = True):
     print(f"testing terraform resources in '{working_dir}'")
 
     t = Terraform(working_dir=working_dir)
@@ -25,4 +25,5 @@ def test_terraform(working_dir: str, validate: bool = True):
             handle_error(return_code, stdout, stderr)
 
 
-test_terraform('src/terraform/infra')
+if __name__ == "__main__":
+    test('src/terraform/infra')

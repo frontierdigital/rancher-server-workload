@@ -114,3 +114,21 @@ jobs:
         run: make install
       - name: Deploy
         run: make deploy
+        env:
+          ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          ENVIRONMENT: dev
+          HELM_CACHE_HOME: "{{ github.workspace }}/.helm/cache"
+          HELM_CONFIG_HOME: "{{ github.workspace }}/.helm/config"
+          HELM_DATA_HOME: "{{ github.workspace }}/.helm/data"
+          REGION: uksouth
+          SET: standalone
+          WORKLOAD_NAME: rancher-server
+          WORKLOAD_TYPE: ${{ github.event.repository.name }}
+          ZONE: demo

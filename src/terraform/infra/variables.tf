@@ -22,6 +22,10 @@ variable "node_count" {
   type = number
 }
 
+variable "set" {
+  type = string
+}
+
 variable "short_location" {
   type = string
 }
