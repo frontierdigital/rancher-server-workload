@@ -113,5 +113,4 @@ jobs:
         if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: make install
       - name: Deploy
-        if: steps.cache-pipenv.outputs.cache-hit != 'true'
         run: make deploy
