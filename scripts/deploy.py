@@ -1,7 +1,7 @@
 import os
 from python_terraform import Terraform
 from shutil import rmtree
-from tempfile import TemporaryDirectory
+# from tempfile import TemporaryDirectory
 
 
 def deploy_terraform(
@@ -27,7 +27,7 @@ def deploy_terraform(
         short_region
     )
 
-    temp_dir_path = TemporaryDirectory()
+    # temp_dir_path = TemporaryDirectory()
 
     t = Terraform(root_dir)
 
@@ -42,10 +42,10 @@ def deploy_terraform(
     if (return_code != 0):
         exit(return_code)
 
-    tf_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
+    # tf_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
 
-    return_code, _, _ = t.plan(
-        out=tf_plan_file_path,
+    return_code, _, _ = t.apply(
+        # out=tf_plan_file_path,
         var={
             "environment": environment,
             "location": region,
@@ -62,14 +62,14 @@ def deploy_terraform(
     if (return_code != 0):
         exit(return_code)
 
-    return_code, _, _ = t.apply(
-        dir_or_plan=tf_plan_file_path,
-        # capture_output=False,
-    )
-    if (return_code != 0):
-        exit(return_code)
+    # return_code, _, _ = t.apply(
+    #     dir_or_plan=tf_plan_file_path,
+    #     capture_output=False,
+    # )
+    # if (return_code != 0):
+    #     exit(return_code)
 
-    rmtree(temp_dir_path.name)
+    # rmtree(temp_dir_path.name)
 
 
 def deploy():
