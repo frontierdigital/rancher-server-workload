@@ -46,6 +46,8 @@ jobs:
   build:
     needs: preflight
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.increment_version.outputs.v-version }}
     steps:
       - uses: actions/checkout@v3
       - name: Configure git
@@ -131,4 +133,5 @@ jobs:
           SET: standalone
           WORKLOAD_NAME: rancher-server
           WORKLOAD_TYPE: ${{ github.event.repository.name }}
+          WORKLOAD_VERSION: ${{ needs.build.outputs.version }}
           ZONE: demo
