@@ -66,6 +66,8 @@ def deploy_terraform(
         dir_or_plan=tf_plan_file_path,
         capture_output=False,
     )
+    if (return_code != 0):
+        exit(return_code)
 
     rmtree(temp_dir_path.name)
 
