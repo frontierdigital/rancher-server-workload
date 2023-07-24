@@ -1,7 +1,5 @@
 import os
-from python_terraform import Terraform
-# from shutil import rmtree
-# from tempfile import TemporaryDirectory
+from python_terraform import IsFlagged, Terraform
 
 
 def deploy_terraform(
@@ -27,8 +25,6 @@ def deploy_terraform(
         short_region
     )
 
-    # temp_dir_path = TemporaryDirectory()
-
     terraform = Terraform(root_dir)
 
     return_code, _, _ = terraform.init(
@@ -42,10 +38,7 @@ def deploy_terraform(
     if (return_code != 0):
         exit(return_code)
 
-    # tf_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
-
     return_code, _, _ = terraform.apply(
-        # out=tf_plan_file_path,
         var={
             "environment": environment,
             "location": region,
@@ -57,20 +50,11 @@ def deploy_terraform(
             "zone": zone,
         },
         var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
-        auto_approve=True,
+        auto_approve=IsFlagged,
         capture_output=False,
     )
     if (return_code != 0):
         exit(return_code)
-
-    # return_code, _, _ = t.apply(
-    #     dir_or_plan=tf_plan_file_path,
-    #     capture_output=False,
-    # )
-    # if (return_code != 0):
-    #     exit(return_code)
-
-    # rmtree(temp_dir_path.name)
 
 
 def deploy():
