@@ -50,7 +50,7 @@ def deploy_terraform(
             "zone": zone,
         },
         var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
-        auto_approve=IsFlagged,
+        skip_plan=True,
         capture_output=False,
     )
     if (return_code != 0):
