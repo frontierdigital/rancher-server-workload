@@ -1,5 +1,5 @@
 import os
-from python_terraform import IsFlagged, Terraform
+from python_terraform import Terraform
 
 
 def deploy_terraform(
