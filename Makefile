@@ -1,10 +1,10 @@
 build:
 
 deploy:
-	PIPENV_DOTENV_LOCATION=".config/.env" pipenv run python scripts/deploy.py
+	PIPENV_DOTENV_LOCATION=".config/env.properties" pipenv run python scripts/deploy.py
 
 destroy:
-	PIPENV_DOTENV_LOCATION=".config/.env" pipenv run python scripts/destroy.py
+	PIPENV_DOTENV_LOCATION=".config/env.properties" pipenv run python scripts/destroy.py
 
 install:
 ifeq ($(INCLUDE_DEV), true)
