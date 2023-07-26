@@ -1,7 +1,5 @@
-import logging
 import os
 import shutil
-import sys
 from python_terraform import Terraform
 from tempfile import TemporaryDirectory
 
@@ -71,23 +69,11 @@ def apply_terraform(
     if (return_code != 0):
         exit(return_code)
 
+    output = terraform.output()
+
     shutil.rmtree(temp_dir_path.name)
 
-    logging.basicConfig(level=logging.DEBUG)
-    root_logger = logging.getLogger()
-    ch = logging.StreamHandler(sys.stdout)
-    root_logger.addHandler(ch)
-
-    return terraform.output()
-
-    # return_code, stdout, stderr = terraform.output_cmd(json=IsFlagged)
-    # if (return_code != 0):
-    #     print(stderr)
-    #     exit(return_code)
-
-    # print(stdout)
-
-    # return json.loads(stdout)
+    return output
 
 
 def _test():
