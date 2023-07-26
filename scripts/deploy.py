@@ -31,13 +31,13 @@ def deploy():
         var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
     )
 
-    kubernetes_service_id = terraform_output["kubernetes_service_id"]["value"]
+    kubernetes_cluster_id = terraform_output["kubernetes_cluster_id"]["value"]
     key_vault_id = terraform_output["key_vault_id"]["value"]
 
-    kubernetes_service_subscription_id = kubernetes_service_id.split("/")[2]
-    kubernetes_service_resource_group_name = kubernetes_service_id.split(
+    kubernetes_cluster_subscription_id = kubernetes_cluster_id.split("/")[2]
+    kubernetes_cluster_resource_group_name = kubernetes_cluster_id.split(
         "/")[4]
-    kubernetes_service_name = kubernetes_service_id.split("/")[8]
+    kubernetes_cluster_name = kubernetes_cluster_id.split("/")[8]
 
     credential = ClientSecretCredential(
         os.getenv("ARM_TENANT_ID"),
@@ -46,12 +46,12 @@ def deploy():
     )
     client = ContainerServiceClient(
         credential=credential,
-        subscription_id=kubernetes_service_subscription_id,
+        subscription_id=kubernetes_cluster_subscription_id,
     )
 
     user_credentials = client.managed_clusters.list_cluster_user_credentials(
-        kubernetes_service_resource_group_name,
-        kubernetes_service_name,
+        kubernetes_cluster_resource_group_name,
+        kubernetes_cluster_name,
     )
 
     temp_dir_path = TemporaryDirectory()
