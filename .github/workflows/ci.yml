@@ -10,11 +10,11 @@ jobs:
   ci:
     uses: frontierdigital/shared-workflows/.github/workflows/terraform-workload.yml@v1.0.0-pre.8a8b37
     with:
-      secrets: inherit
-        # armClientId: ${{ secrets.AZURE_CLIENT_ID }}
-        # armClientSecret: ${{ secrets.AZURE_CLIENT_SECRET }}
-        # armSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        # armTenantId: ${{ secrets.AZURE_TENANT_ID }}
+      secrets:
+        armClientId: ${{ secrets.AZURE_CLIENT_ID }}
+        armClientSecret: ${{ secrets.AZURE_CLIENT_SECRET }}
+        armSubscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        armTenantId: ${{ secrets.AZURE_TENANT_ID }}
   # preflight:
   #   runs-on: ubuntu-latest
   #   outputs:
