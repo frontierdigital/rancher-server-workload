@@ -25,13 +25,14 @@ def deploy():
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),
-        workload_name=os.getenv("WORKLOAD_NAME"),
+        workload_name="{0}-infra".format(os.getenv("WORKLOAD_NAME")),
         workload_type=os.getenv("WORKLOAD_TYPE"),
         workload_version=os.getenv("WORKLOAD_VERSION"),
+        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
     )
 
     kubernetes_service_id = terraform_output["kubernetes_service_id"]["value"]
-    # key_vault_id = terraform_output["key_vault_id"]["value"]
+    key_vault_id = terraform_output["key_vault_id"]["value"]
 
     kubernetes_service_subscription_id = kubernetes_service_id.split("/")[2]
     kubernetes_service_resource_group_name = kubernetes_service_id.split(
@@ -117,7 +118,23 @@ def deploy():
     exec(command=command, silent=False)
 
     bootstrap_password = get_bootstrap_password(kubeconfig_file_path)
-    print(bootstrap_password)
+
+    terraform_output = apply_terraform(
+        root_dir=os.path.join(os.getcwd(), "src/terraform/config"),
+        region=region,
+        short_region=short_region,
+        environment=os.getenv("ENVIRONMENT"),
+        zone=os.getenv("ZONE"),
+        set=os.getenv("SET"),
+        workload_name="{0}-config".format(os.getenv("WORKLOAD_NAME")),
+        workload_type=os.getenv("WORKLOAD_TYPE"),
+        workload_version=os.getenv("WORKLOAD_VERSION"),
+        vars={
+            "bootstrap_password": bootstrap_password,
+            "rancher_server_api_url": "https://{0}".format(external_hostname),
+            "rancher_server_key_vault_id": key_vault_id,
+        }
+    )
 
     shutil.rmtree(temp_dir_path.name)
 

@@ -1,4 +1,3 @@
-import os
 from python_terraform import Terraform
 
 
@@ -12,7 +11,7 @@ def apply_terraform(
         workload_name: str,
         workload_type: str,
         workload_version: str,
-        destroy: bool = False,
+        **kwargs: dict,
 ) -> dict:
     terraform_state_key = "{0}_{1}".format(set, workload_name)
     terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(  # noqa: E501
@@ -50,10 +49,9 @@ def apply_terraform(
             "workload_version": workload_version,
             "zone": zone,
         },
-        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
-        destroy=destroy,
         skip_plan=True,
         capture_output=False,
+        **kwargs,
     )
     if (return_code != 0):
         exit(return_code)

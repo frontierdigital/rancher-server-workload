@@ -14,16 +14,16 @@ def destroy():
             short_region = "ukw"
 
     apply_terraform(
-        os.path.join(os.getcwd(), "src/terraform/infra"),
-        region,
-        short_region,
-        os.getenv("ENVIRONMENT"),
-        os.getenv("ZONE"),
-        os.getenv("SET"),
-        os.getenv("WORKLOAD_NAME"),
-        os.getenv("WORKLOAD_TYPE"),
-        os.getenv("WORKLOAD_VERSION"),
-        True,
+        root_dir=os.path.join(os.getcwd(), "src/terraform/infra"),
+        region=region,
+        short_region=short_region,
+        environment=os.getenv("ENVIRONMENT"),
+        zone=os.getenv("ZONE"),
+        set=os.getenv("SET"),
+        workload_name=os.getenv("WORKLOAD_NAME"),
+        workload_type=os.getenv("WORKLOAD_TYPE"),
+        workload_version=os.getenv("WORKLOAD_VERSION"),
+        destroy=True,
     )
 
     # client = KubernetesConfigurationClient()
