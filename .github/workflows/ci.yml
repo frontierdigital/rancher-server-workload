@@ -8,7 +8,9 @@ on:
 
 jobs:
   ci:
-    uses: frontierdigital/shared-workflows/.github/workflows/terraform-workload.yml@v1.0.0-pre.8a8b37
+    uses: frontierdigital/shared-workflows/.github/workflows/terraform-workload.yml@v1.0.0-pre.2839fcf
+    with:
+      workloadName: rancher-server
     secrets:
       armClientId: ${{ secrets.AZURE_CLIENT_ID }}
       armClientSecret: ${{ secrets.AZURE_CLIENT_SECRET }}
