@@ -38,23 +38,23 @@ def apply_terraform(
     if (return_code != 0):
         exit(return_code)
 
-    return_code, _, _ = terraform.apply(
-        var={
-            "environment": environment,
-            "location": region,
-            "set": set,
-            "short_location": short_region,
-            "workload_name": workload_name,
-            "workload_type": workload_type,
-            "workload_version": workload_version,
-            "zone": zone,
-        },
-        skip_plan=True,
-        capture_output=False,
-        **kwargs,
-    )
-    if (return_code != 0):
-        exit(return_code)
+    # return_code, _, _ = terraform.apply(
+    #     var={
+    #         "environment": environment,
+    #         "location": region,
+    #         "set": set,
+    #         "short_location": short_region,
+    #         "workload_name": workload_name,
+    #         "workload_type": workload_type,
+    #         "workload_version": workload_version,
+    #         "zone": zone,
+    #     },
+    #     skip_plan=True,
+    #     capture_output=False,
+    #     **kwargs,
+    # )
+    # if (return_code != 0):
+    #     exit(return_code)
 
     return terraform.output()
 
