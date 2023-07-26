@@ -34,6 +34,8 @@ def deploy():
     kubernetes_cluster_id = terraform_output["kubernetes_cluster_id"]["value"]
     key_vault_id = terraform_output["key_vault_id"]["value"]
 
+    return
+
     kubernetes_cluster_subscription_id = kubernetes_cluster_id.split("/")[2]
     kubernetes_cluster_resource_group_name = kubernetes_cluster_id.split(
         "/")[4]

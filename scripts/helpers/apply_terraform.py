@@ -79,10 +79,14 @@ def apply_terraform(
     ch = logging.StreamHandler(sys.stdout)
     root_logger.addHandler(ch)
 
+    # return terraform.output()
+
     return_code, stdout, stderr = terraform.output_cmd(json=IsFlagged)
     if (return_code != 0):
         print(stderr)
         exit(return_code)
+
+    print(stdout)
 
     return json.loads(stdout)
 
