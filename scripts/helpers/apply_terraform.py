@@ -1,9 +1,8 @@
-import json
 import logging
 import os
 import shutil
 import sys
-from python_terraform import IsFlagged, Terraform
+from python_terraform import Terraform
 from tempfile import TemporaryDirectory
 
 
