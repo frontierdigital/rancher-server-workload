@@ -20,9 +20,10 @@ def destroy():
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),
-        workload_name=os.getenv("WORKLOAD_NAME"),
+        workload_name="{0}-infra".format(os.getenv("WORKLOAD_NAME")),
         workload_type=os.getenv("WORKLOAD_TYPE"),
         workload_version=os.getenv("WORKLOAD_VERSION"),
+        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
         destroy=True,
     )
 
