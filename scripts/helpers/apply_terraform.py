@@ -2,7 +2,7 @@ import os
 from python_terraform import Terraform
 
 
-def deploy_terraform(
+def apply_terraform(
         root_dir: str,
         region: str,
         short_region: str,
@@ -12,7 +12,8 @@ def deploy_terraform(
         workload_name: str,
         workload_type: str,
         workload_version: str,
-):
+        destroy: bool = False,
+) -> dict:
     terraform_state_key = "{0}_{1}".format(set, workload_name)
     terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(  # noqa: E501
         zone,
@@ -50,8 +51,19 @@ def deploy_terraform(
             "zone": zone,
         },
         var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
+        destroy=destroy,
         skip_plan=True,
         capture_output=False,
     )
     if (return_code != 0):
         exit(return_code)
+
+    return terraform.output()
+
+
+def _test():
+    raise NotImplementedError
+
+
+if __name__ == "__main__":
+    _test()

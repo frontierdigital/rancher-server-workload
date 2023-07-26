@@ -7,8 +7,12 @@
 
 # python
 .venv
+__pycache__
 
 # terraform
 .terraform
+
+# helm
+.helm
 
 # other

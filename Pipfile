@@ -5,6 +5,8 @@ name = "pypi"
 
 [packages]
 python-terraform = "~=0.10.1"
+azure-identity = "~=1.13.0"
+azure-mgmt-containerservice = "~=24.0.0"
 
 [dev-packages]
 flake8 = "~=6.0.0"
