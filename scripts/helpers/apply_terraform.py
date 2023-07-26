@@ -1,4 +1,9 @@
+import logging
+import os
+import shutil
+import sys
 from python_terraform import Terraform
+from tempfile import TemporaryDirectory
 
 
 def apply_terraform(
@@ -38,23 +43,40 @@ def apply_terraform(
     if (return_code != 0):
         exit(return_code)
 
+    temp_dir_path = TemporaryDirectory()
+    terraform_plan_file_path = os.path.join(temp_dir_path.name, "main.tfplan")
+    return_code, _, _ = terraform.plan(
+        out=terraform_plan_file_path,
+        var={
+            "environment": environment,
+            "location": region,
+            "set": set,
+            "short_location": short_region,
+            "workload_name": workload_name,
+            "workload_type": workload_type,
+            "workload_version": workload_version,
+            "zone": zone,
+        },
+        capture_output=False,
+        **kwargs,
+    )
+    if (return_code != 0 and return_code != 2):
+        exit(return_code)
+
     # return_code, _, _ = terraform.apply(
-    #     var={
-    #         "environment": environment,
-    #         "location": region,
-    #         "set": set,
-    #         "short_location": short_region,
-    #         "workload_name": workload_name,
-    #         "workload_type": workload_type,
-    #         "workload_version": workload_version,
-    #         "zone": zone,
-    #     },
-    #     skip_plan=True,
+    #     dir_or_plan=terraform_plan_file_path,
+    #     var=None,
     #     capture_output=False,
-    #     **kwargs,
     # )
     # if (return_code != 0):
     #     exit(return_code)
+
+    shutil.rmtree(temp_dir_path.name)
+
+    logging.basicConfig(level=logging.DEBUG)
+    root_logger = logging.getLogger()
+    ch = logging.StreamHandler(sys.stdout)
+    root_logger.addHandler(ch)
 
     return terraform.output()
 
