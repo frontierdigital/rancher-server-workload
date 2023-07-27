@@ -32,3 +32,9 @@ resource "azurerm_key_vault_secret" "rancher_admin_token" {
   value        = rancher2_token.main.token
   key_vault_id = data.azurerm_key_vault.main.id
 }
+
+resource "azurerm_key_vault_secret" "rancher_server_api_url" {
+  name         = "rancher-server-api-url"
+  value        = var.rancher_server_api_url
+  key_vault_id = data.azurerm_key_vault.main.id
+}

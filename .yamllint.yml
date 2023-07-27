@@ -2,6 +2,7 @@
 extends: default
 
 ignore:
+  - .helm/
   - .terraform/
 
 rules:

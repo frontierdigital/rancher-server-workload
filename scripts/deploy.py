@@ -5,18 +5,15 @@ from helpers.download_kubeconfig import download_kubeconfig
 from helpers.exec import exec
 from helpers.get_bootstrap_password import get_bootstrap_password
 from helpers.get_ingress_external_ip import get_ingress_external_ip
-from helpers.get_short_region import get_short_region
 from tempfile import TemporaryDirectory
 
 
 def deploy():
     region = os.getenv("REGION")
-    short_region = get_short_region(region)
 
     terraform_output = apply_terraform(
         working_dir=os.path.join(os.getcwd(), "src/terraform/infra"),
         region=region,
-        short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),
@@ -108,7 +105,6 @@ def deploy():
     terraform_output = apply_terraform(
         working_dir=os.path.join(os.getcwd(), "src/terraform/config"),
         region=region,
-        short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),

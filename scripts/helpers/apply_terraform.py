@@ -1,5 +1,6 @@
 import os
 import shutil
+from helpers.get_short_region import get_short_region
 from helpers.get_terraform_state_config import get_terraform_state_config
 from python_terraform import Terraform
 from tempfile import TemporaryDirectory
@@ -8,7 +9,6 @@ from tempfile import TemporaryDirectory
 def apply_terraform(
         working_dir: str,
         region: str,
-        short_region: str,
         environment: str,
         zone: str,
         set: str,
@@ -28,6 +28,7 @@ def apply_terraform(
         set=set,
         workload_name=workload_name,
     )
+    short_region = get_short_region(region)
 
     terraform = Terraform(working_dir=working_dir)
 
