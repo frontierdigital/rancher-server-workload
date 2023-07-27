@@ -1,5 +1,5 @@
 module "kubernetes_cluster" {
-  source = "git::https://github.com/frontierdigital/kubernetes-cluster-terraform-module//src?ref=v1.0.0-pre.9914400"
+  source = "git::https://github.com/frontierdigital/kubernetes-cluster-terraform-module//src?ref=v1.0.0"
 
   environment                = var.environment
   identifier                 = local.identifier

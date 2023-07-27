@@ -1,5 +1,5 @@
 module "key_vault" {
-  source = "git::https://github.com/frontierdigital/key-vault-terraform-module//src?ref=v1.0.0-pre.309aabd"
+  source = "git::https://github.com/frontierdigital/key-vault-terraform-module//src?ref=v1.0.0"
 
   environment                = var.environment
   identifier                 = "ranserv"

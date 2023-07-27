@@ -26,3 +26,4 @@ def test_terraform(working_dir: str, validate: bool = True):
 
 if __name__ == "__main__":
     test_terraform(os.path.join(os.getcwd(), "src/terraform/infra"))
+    test_terraform(os.path.join(os.getcwd(), "src/terraform/config"))
