@@ -43,16 +43,16 @@ def deploy():
     )
 
     command = "helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx"
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "helm repo add jetstack https://charts.jetstack.io"
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "helm repo add rancher-stable https://releases.rancher.com/server-charts/stable"
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "helm repo update"
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "helm upgrade ingress-nginx ingress-nginx/ingress-nginx \
         --version 4.6.1 \
@@ -62,7 +62,7 @@ def deploy():
         --wait \
         --kubeconfig \"{0}\" \
         --set controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path\"=/healthz".format(kubeconfig_file_path)
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "helm upgrade cert-manager jetstack/cert-manager \
         --version v1.5.1 \
@@ -72,7 +72,7 @@ def deploy():
         --wait \
         --kubeconfig \"{0}\" \
         --set installCRDs=true".format(kubeconfig_file_path)
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     ingress_external_ip = get_ingress_external_ip(kubeconfig_file_path)
     external_hostname = "{0}.nip.io".format(ingress_external_ip)
@@ -93,12 +93,12 @@ def deploy():
         external_hostname,
         os.getenv("REPLICAS")
     )
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     command = "kubectl rollout status deploy/rancher \
         --namespace cattle-system \
         --kubeconfig \"{0}\"".format(kubeconfig_file_path)
-    exec(command=command, silent=False)
+    exec(command=command, opts={"silent": False})
 
     bootstrap_password = get_bootstrap_password(kubeconfig_file_path)
 

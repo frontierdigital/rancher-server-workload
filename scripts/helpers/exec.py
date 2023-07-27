@@ -1,9 +1,14 @@
 import subprocess
 
 
-def exec(command: str, silent: bool = True) -> tuple[str, str]:
+# def exec(command: str, silent: bool = True) -> tuple[str, str]:
+def exec(command: str, opts: dict = {}) -> tuple[str, str]:
+    cwd = opts.get("cwd", None)
+    silent = opts.get("silent", True)
+
     process = subprocess.Popen(
         command,
+        cwd=cwd,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         shell=True

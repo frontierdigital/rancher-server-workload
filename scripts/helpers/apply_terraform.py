@@ -4,7 +4,7 @@ import shutil
 from helpers.exec import exec
 from helpers.get_short_region import get_short_region
 from helpers.get_terraform_state_config import get_terraform_state_config
-from python_terraform import IsFlagged, Terraform
+from python_terraform import Terraform
 from tempfile import TemporaryDirectory
 
 
@@ -107,7 +107,10 @@ def apply_terraform(
 
     # return json.loads(stdout.replace('\n', ''))
 
-    out = exec("cd {} && terraform output -json".format(working_dir))
+    out = exec(
+        command="terraform output -json",
+        opts={"cwd": working_dir},
+    )
     return json.loads(out[0].decode("utf-8"))
 
 
