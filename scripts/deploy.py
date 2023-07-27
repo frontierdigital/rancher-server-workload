@@ -20,7 +20,7 @@ def deploy():
         workload_name="{0}-infra".format(os.getenv("WORKLOAD_NAME")),
         workload_type=os.getenv("WORKLOAD_TYPE"),
         workload_version=os.getenv("WORKLOAD_VERSION"),
-        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),  # noqa: E501
+        var_file=os.path.join(os.getcwd(), ".config", "main.tfvars"),
     )
 
     kubernetes_cluster_id = terraform_output["kubernetes_cluster_id"]["value"]
@@ -42,13 +42,13 @@ def deploy():
         cluster_name=kubernetes_cluster_name,
     )
 
-    command = "helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx"  # noqa: E501
+    command = "helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx"
     exec(command=command, silent=False)
 
     command = "helm repo add jetstack https://charts.jetstack.io"
     exec(command=command, silent=False)
 
-    command = "helm repo add rancher-stable https://releases.rancher.com/server-charts/stable"  # noqa: E501
+    command = "helm repo add rancher-stable https://releases.rancher.com/server-charts/stable"
     exec(command=command, silent=False)
 
     command = "helm repo update"
@@ -61,7 +61,7 @@ def deploy():
         --install \
         --wait \
         --kubeconfig \"{0}\" \
-        --set controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path\"=/healthz".format(kubeconfig_file_path)  # noqa: E501
+        --set controller.service.annotations.\"service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path\"=/healthz".format(kubeconfig_file_path)
     exec(command=command, silent=False)
 
     command = "helm upgrade cert-manager jetstack/cert-manager \

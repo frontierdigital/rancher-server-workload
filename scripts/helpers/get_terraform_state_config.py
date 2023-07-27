@@ -11,7 +11,7 @@ def get_terraform_state_config(
     short_region = get_short_region(region=region)
 
     terraform_state_key = "{0}_{1}".format(set, workload_name)
-    terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(  # noqa: E501
+    terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(
         zone,
         environment,
         short_region
@@ -22,7 +22,7 @@ def get_terraform_state_config(
         short_region
     )
 
-    return terraform_state_key, terraform_state_storage_account_resource_group_name, terraform_state_storage_account_name  # noqa: E501
+    return terraform_state_key, terraform_state_storage_account_resource_group_name, terraform_state_storage_account_name
 
 
 def _test():

@@ -32,7 +32,7 @@ def destroy():
     return_code, _, _ = terraform.init(
         backend_config={
             "key": terraform_state_key,
-            "resource_group_name": terraform_state_storage_account_resource_group_name,  # noqa: E501
+            "resource_group_name": terraform_state_storage_account_resource_group_name,
             "storage_account_name": terraform_state_storage_account_name,
         },
         capture_output=False,
