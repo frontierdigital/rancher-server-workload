@@ -100,13 +100,6 @@ def apply_terraform(
     #     raise JSONDecodeError("Expecting value", s, err.value) from None
     # json.decoder.JSONDecodeError: Expecting value: line 1 column 2 (char 1)
 
-    # return_code, stdout, stderr = terraform.cmd("output", json=IsFlagged)
-    # if (return_code != 0):
-    #     print(stderr)
-    #     exit(return_code)
-
-    # return json.loads(stdout.replace('\n', ''))
-
     out = exec(
         command="terraform output -json",
         opts={"cwd": working_dir},
