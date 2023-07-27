@@ -104,7 +104,9 @@ def apply_terraform(
         print(stderr)
         exit(return_code)
 
-    return json.loads(stdout.lstrip())
+    out = stdout.replace('\n', '')
+    print(out)
+    return json.loads(out)
 
 
 def _test():
