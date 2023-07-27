@@ -3,7 +3,6 @@ from helpers.apply_terraform import apply_terraform
 from helpers.download_kubeconfig import download_kubeconfig
 from helpers.get_bootstrap_password import get_bootstrap_password
 from helpers.get_ingress_external_ip import get_ingress_external_ip
-from helpers.get_short_region import get_short_region
 from helpers.get_terraform_state_config import get_terraform_state_config
 from python_terraform import Terraform
 from tempfile import TemporaryDirectory
@@ -11,7 +10,6 @@ from tempfile import TemporaryDirectory
 
 def destroy():
     region = os.getenv("REGION")
-    short_region = get_short_region(region)
 
     (
         terraform_state_key,
@@ -68,7 +66,6 @@ def destroy():
     apply_terraform(
         working_dir=os.path.join(os.getcwd(), "src/terraform/config"),
         region=region,
-        short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),
@@ -86,7 +83,6 @@ def destroy():
     apply_terraform(
         working_dir=os.path.join(os.getcwd(), "src/terraform/infra"),
         region=region,
-        short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),
         zone=os.getenv("ZONE"),
         set=os.getenv("SET"),
