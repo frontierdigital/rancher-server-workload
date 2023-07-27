@@ -8,7 +8,7 @@ on:
 
 jobs:
   ci:
-    uses: frontierdigital/shared-workflows/.github/workflows/terraform-workload.yml@v1.0.0-pre.d65160a
+    uses: frontierdigital/shared-workflows/.github/workflows/terraform-workload.yml@v1.0.0-pre.b4ac6f8
     with:
       workloadName: rancher-server
     secrets:
