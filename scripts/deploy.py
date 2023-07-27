@@ -1,25 +1,20 @@
 import os
 import shutil
-from azure.identity import ClientSecretCredential
-from azure.mgmt.containerservice import ContainerServiceClient
 from helpers.apply_terraform import apply_terraform
+from helpers.download_kubeconfig import download_kubeconfig
 from helpers.exec import exec
 from helpers.get_bootstrap_password import get_bootstrap_password
 from helpers.get_ingress_external_ip import get_ingress_external_ip
+from helpers.get_short_region import get_short_region
 from tempfile import TemporaryDirectory
 
 
 def deploy():
     region = os.getenv("REGION")
-    short_region = None
-    match region:
-        case "uksouth":
-            short_region = "uks"
-        case "ukwest":
-            short_region = "ukw"
+    short_region = get_short_region(region)
 
     terraform_output = apply_terraform(
-        root_dir=os.path.join(os.getcwd(), "src/terraform/infra"),
+        working_dir=os.path.join(os.getcwd(), "src/terraform/infra"),
         region=region,
         short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),
@@ -39,25 +34,16 @@ def deploy():
         "/")[4]
     kubernetes_cluster_name = kubernetes_cluster_id.split("/")[8]
 
-    credential = ClientSecretCredential(
-        os.getenv("ARM_TENANT_ID"),
-        os.getenv("ARM_CLIENT_ID"),
-        os.getenv("ARM_CLIENT_SECRET"),
-    )
-    client = ContainerServiceClient(
-        credential=credential,
-        subscription_id=kubernetes_cluster_subscription_id,
-    )
-
-    user_credentials = client.managed_clusters.list_cluster_user_credentials(
-        kubernetes_cluster_resource_group_name,
-        kubernetes_cluster_name,
-    )
-
     temp_dir_path = TemporaryDirectory()
-    kubeconfig_file_path = os.path.join(temp_dir_path.name, "kube.config")
-    with open(kubeconfig_file_path, "wb") as kubeconfig_file:
-        kubeconfig_file.write(user_credentials.kubeconfigs[0].value)
+    kubeconfig_file_path = download_kubeconfig(
+        dest_dir_path=temp_dir_path.name,
+        client_id=os.getenv("ARM_CLIENT_ID"),
+        client_secret=os.getenv("ARM_CLIENT_SECRET"),
+        tenant_id=os.getenv("ARM_TENANT_ID"),
+        cluster_subscription_id=kubernetes_cluster_subscription_id,
+        cluster_resource_group_name=kubernetes_cluster_resource_group_name,
+        cluster_name=kubernetes_cluster_name,
+    )
 
     command = "helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx"  # noqa: E501
     exec(command=command, silent=False)
@@ -120,7 +106,7 @@ def deploy():
     bootstrap_password = get_bootstrap_password(kubeconfig_file_path)
 
     terraform_output = apply_terraform(
-        root_dir=os.path.join(os.getcwd(), "src/terraform/config"),
+        working_dir=os.path.join(os.getcwd(), "src/terraform/config"),
         region=region,
         short_region=short_region,
         environment=os.getenv("ENVIRONMENT"),

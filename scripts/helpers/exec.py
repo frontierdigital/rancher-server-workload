@@ -1,7 +1,7 @@
 import subprocess
 
 
-def exec(command: str, silent: bool = True):
+def exec(command: str, silent: bool = True) -> tuple[str, str]:
     process = subprocess.Popen(
         command,
         stdout=subprocess.PIPE,
@@ -17,3 +17,11 @@ def exec(command: str, silent: bool = True):
         print(stdout.decode("utf-8"))
 
     return stdout, stderr
+
+
+def _test():
+    raise NotImplementedError
+
+
+if __name__ == "__main__":
+    _test()

@@ -1,11 +1,12 @@
 import os
 import shutil
+from helpers.get_terraform_state_config import get_terraform_state_config
 from python_terraform import Terraform
 from tempfile import TemporaryDirectory
 
 
 def apply_terraform(
-        root_dir: str,
+        working_dir: str,
         region: str,
         short_region: str,
         environment: str,
@@ -16,19 +17,19 @@ def apply_terraform(
         workload_version: str,
         **kwargs: dict,
 ) -> dict:
-    terraform_state_key = "{0}_{1}".format(set, workload_name)
-    terraform_state_storage_account_resource_group_name = "{0}-{1}-{2}-tfstate-rg".format(  # noqa: E501
-        zone,
-        environment,
-        short_region
-    )
-    terraform_state_storage_account_name = "{0}0{1}0{2}0tfstate0sa".format(
-        zone,
-        environment,
-        short_region
+    (
+        terraform_state_key,
+        terraform_state_storage_account_resource_group_name,
+        terraform_state_storage_account_name,
+    ) = get_terraform_state_config(
+        region=region,
+        environment=environment,
+        zone=zone,
+        set=set,
+        workload_name=workload_name,
     )
 
-    terraform = Terraform(root_dir)
+    terraform = Terraform(working_dir=working_dir)
 
     return_code, _, _ = terraform.init(
         backend_config={
@@ -69,11 +70,9 @@ def apply_terraform(
     if (return_code != 0):
         exit(return_code)
 
-    output = terraform.output()
-
     shutil.rmtree(temp_dir_path.name)
 
-    return output
+    return terraform.output()
 
 
 def _test():
