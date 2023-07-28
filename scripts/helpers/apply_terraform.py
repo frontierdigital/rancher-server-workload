@@ -1,10 +1,10 @@
-import json
+# import json
 import os
 import shutil
-from helpers.exec import exec
+# from helpers.exec import exec
 from helpers.get_short_region import get_short_region
 from helpers.get_terraform_state_config import get_terraform_state_config
-from python_terraform import Terraform
+from python_terraform import IsFlagged, Terraform
 from tempfile import TemporaryDirectory
 
 
@@ -75,9 +75,7 @@ def apply_terraform(
 
     shutil.rmtree(temp_dir_path.name)
 
-    # return terraform.output()
-    #
-    # For some reason, terraform.output() doesn't work here:
+    return terraform.output(json=IsFlagged)
     #
     # Traceback (most recent call last):
     # File "/home/runner/work/rancher-cluster-workload/rancher-cluster-workload/scripts/deploy.py", line 22, in <module>
@@ -100,11 +98,11 @@ def apply_terraform(
     #     raise JSONDecodeError("Expecting value", s, err.value) from None
     # json.decoder.JSONDecodeError: Expecting value: line 1 column 2 (char 1)
 
-    out = exec(
-        command="bash -c 'terraform output -json'",
-        opts={"cwd": working_dir},
-    )
-    return json.loads(out[0].decode("utf-8"))
+    # out = exec(
+    #     command="terraform output -json",
+    #     opts={"cwd": working_dir},
+    # )
+    # return json.loads(out[0].decode("utf-8"))
 
 
 def _test():
