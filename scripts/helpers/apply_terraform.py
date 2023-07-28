@@ -64,13 +64,13 @@ def apply_terraform(
     if (return_code != 0 and return_code != 2):
         exit(return_code)
 
-    return_code, _, _ = terraform.apply(
-        dir_or_plan=terraform_plan_file_path,
-        var=None,
-        capture_output=False,
-    )
-    if (return_code != 0):
-        exit(return_code)
+    # return_code, _, _ = terraform.apply(
+    #     dir_or_plan=terraform_plan_file_path,
+    #     var=None,
+    #     capture_output=False,
+    # )
+    # if (return_code != 0):
+    #     exit(return_code)
 
     shutil.rmtree(temp_dir_path.name)
 
