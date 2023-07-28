@@ -101,7 +101,7 @@ def apply_terraform(
     # json.decoder.JSONDecodeError: Expecting value: line 1 column 2 (char 1)
 
     out = exec(
-        command="terraform output -json",
+        command="bash -c 'terraform output -json'",
         opts={"cwd": working_dir},
     )
     return json.loads(out[0].decode("utf-8"))
