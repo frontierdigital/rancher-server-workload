@@ -1,0 +1,10 @@
+---
+extends: default
+
+ignore:
+  - .helm/
+  - .terraform/
+
+rules:
+  line-length: false
+  truthy: false
