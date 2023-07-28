@@ -3,7 +3,7 @@
 [![CI](https://github.com/frontierdigital/rancher-server-workload/actions/workflows/ci.yml/badge.svg)](https://github.com/frontierdigital/rancher-server-workload/actions/workflows/ci.yml)
 
 ## About
-Deploys [SUSE Rancher Server](https://www.suse.com/solutions/enterprise-container-management) on Azure Kubernetes Service, including integration into Microsoft Entra ID (Azure AD), Azure Monitor and Microsoft Defender for Cloud.
+Deploys [SUSE Rancher Server](https://www.suse.com/solutions/enterprise-container-management) on [Azure Kubernetes Service](https://azure.microsoft.com/en-gb/products/kubernetes-service), including integration into Microsoft Entra ID (Azure AD), Azure Monitor and Microsoft Defender for Cloud.
 
 ## Requirements
 ### Python
