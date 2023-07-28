@@ -6,13 +6,13 @@
 
 ## Requirements
 ### Python
-See [.python-version](.python-version) file.
+See the [.python-version](.python-version) file.
 
 ### Terraform
-See [.tfswitchrc](.tfswitchrc) file.
+See the [.tfswitchrc](.tfswitchrc) file.
 
 ### Helm
-See [.helm-version](.helm-version) file.
+See the [.helm-version](.helm-version) file.
 
 ## Test
 ```sh
