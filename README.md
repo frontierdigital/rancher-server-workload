@@ -12,7 +12,7 @@ See [.python-version](.python-version) file.
 See [.tfswitchrc](.tfswitchrc) file.
 
 ### Helm
-
+See [.helm-version](.helm-version) file.
 
 ## Test
 ```sh
